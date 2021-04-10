@@ -4,14 +4,14 @@
     <label for="civilization_select">Select a Civilization:</label>
     <select id="civilization_select" v-model="selectedCivilization">
       <option disabled value="">Select a civilization</option>
-      <option v-for="civilization in civilizations" :key="civilization.name" :value="civilization">{{civilization.name}}</option>
+      <option v-for="civilization in civilizations" :key="civilization" :value="civilization">{{civilization.name}}</option>
     </select>
 
-    <civilization-detail v-if="selectedCountry" :selectedCountry="selectedCountry"/>
+    <civilization-detail v-if="selectedCivilization" :selectedCivilization="selectedCivilization"/>
 
-    <button v-if="!favouriteCivs.includes(selectedCivilization)" v-on:click="addToFavourites">Add Civilization</button>
+    <!-- <button v-if="!favouriteCivilizations.includes(selectedCivilization)" v-on:click="addToFavourites">Add Civilization</button>
 
-    <favourite-civilizations :favouriteCs="favouriteCs"></favourite-countries>
+    <favourite-civilizations :favouriteCivilizations="favouriteCivilizations"/> -->
 </div>
 </template>
 
@@ -30,20 +30,20 @@ export default {
   },
   components: {
     'civilization-detail': CivilizationDetail,
-    'favourite-Civilizations': FavouriteCiv
+    'favourite-civilizations': FavouriteCiv
   },
   mounted(){
     this.getCivilizations()
   },
   methods: {
     getCivilizations: function(){
-      fetch("https://age-of-empires-2-api.herokuapp.com/api/v1/civilizations")
+      fetch("https://age-of-empires-2-api.herokuapp.com/api/v1/civilizations",{ mode: 'no-cors' })
       .then(res => res.json())
-      .then(countries => this.countries = countries)
+      .then(civilizations => this.civilizations = civilizations)
     },
-    addToFavourites: function(){
-      this.favouriteCivs.push(this.selectedCivilization)
-    },
+    // addToFavourites: function(){
+    //   this.favouriteCivilizations.push(this.selectedCivilization)
+    // },
   }
 }
 </script>
