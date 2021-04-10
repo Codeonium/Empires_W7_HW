@@ -4,7 +4,7 @@
     <label for="civilization_select">Select a Civilization:</label>
     <select id="civilization_select" v-model="selectedCivilization">
       <option disabled value="">Select a civilization</option>
-      <option v-for="civilization in civilizations" :key="civilization" :value="civilization">{{civilization.name}}</option>
+      <option v-for="civilization in civilizations" :key="civilization.name" :value="civilization">{{civilization.name}}</option>
     </select>
 
     <civilization-detail v-if="selectedCivilization" :selectedCivilization="selectedCivilization"/>
@@ -17,7 +17,7 @@
 
 <script>
 import CivilizationDetail from './components/CivilizationDetail.vue';
-import FavouriteCiv from './components/FavouriteCiv.vue';
+import FavouriteCivivilization from './components/FavouriteCiv.vue';
 
 export default {
   name: 'App',
@@ -30,7 +30,7 @@ export default {
   },
   components: {
     'civilization-detail': CivilizationDetail,
-    'favourite-civilizations': FavouriteCiv
+    'favourite-civilizations': FavouriteCivivilization
   },
   mounted(){
     this.getCivilizations()
@@ -39,11 +39,11 @@ export default {
     getCivilizations: function(){
       fetch("https://age-of-empires-2-api.herokuapp.com/api/v1/civilizations",{ mode: 'no-cors' })
       .then(res => res.json())
-      .then(civilizations => this.civilizations = civilizations)
+      .then(civilizations => this.civilizations = civilizations.civilizations)
     },
-    // addToFavourites: function(){
-    //   this.favouriteCivilizations.push(this.selectedCivilization)
-    // },
+    addToFavourites: function(){
+      this.favouriteCivilizations.push(this.selectedCivilization)
+    },
   }
 }
 </script>
